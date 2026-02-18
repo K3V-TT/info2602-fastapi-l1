@@ -30,3 +30,40 @@ async def get_student(id):
   for student in data: 
     if student['id'] == id: # Only return the student if the ID matches
       return student
+    
+@app.get('/stats')
+async def get_count():
+
+    # Initialize counters
+    stats = {}
+    
+    # Iterate through all students in the data
+    for student in data:
+        # Count meal preferences (pref field)
+        pref = student.get('pref')
+        if pref:
+            stats[pref] = stats.get(pref, 0) + 1
+        
+        # Count programmes (programme field)
+        programme = student.get('programme')
+        if programme:
+            stats[programme] = stats.get(programme, 0) + 1
+    
+    # Return the statistics (return outside the loop)
+    return stats
+
+@app.get('/add/a/b')
+async def add(a: float, b: float):
+   return a + b
+
+@app.get('/subtract/a/b')
+async def subtract(a: float, b: float):
+   return a - b
+
+@app.get('/multiply/a/b')
+async def multiply(a: float, b: float):
+   return a * b
+
+@app.get('/divide/a/b')
+async def divide(a: float, b: float):
+   return a / b
